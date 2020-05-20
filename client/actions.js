@@ -26,6 +26,7 @@ const userSelectChange$ = fromEvent(userSelect, 'change')
 const sendMessage$ = merge(sendButtonClick$, enterKeyPress$)
   .pipe(
     map(() => inputBox.value),
+    // We filter out any empty messages in case the user presses enter without typing anything.
     filter(message => message),
     withLatestFrom(userSelectChange$)
   )

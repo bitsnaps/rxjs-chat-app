@@ -1,8 +1,9 @@
 import { of } from 'rxjs'
 import { withLatestFrom } from 'rxjs/operators'
-import { getUsername, addMessage, addUser, clearUsers, clearUserInput, removeUser } from './utilities'
-import { listenOnConnect, emitOnConnect } from './connection'
+import { getUsername, addUser, clearUsers, removeUser, clearUserInput, addMessage } from './utilities'
+import { emitOnConnect, listenOnConnect } from './connection'
 import sendMessage$ from './actions'
+
 
 const username$ = of(getUsername())
 
@@ -21,7 +22,7 @@ emitOnConnect(sendMessage$)
   .subscribe(([ { socket, data }, username ]) => {
     const [ message, id ] = data
     clearUserInput()
-    addMessage(username, message) // Add own chat message to DOM
+    addMessage(username, message)
     socket.emit('chat message', { id, message })
   })
 
@@ -47,6 +48,6 @@ listenOnConnect('new user')
 
 // Listen for user removals
 listenOnConnect('remove user')
-  .subscribe(id => {
-    removeUser(id)
+  .subscribe(({id, username}) => {
+    removeUser(id, username)
   })

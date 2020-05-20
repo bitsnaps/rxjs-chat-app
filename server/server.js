@@ -4,6 +4,7 @@ const app = express()
 
 if (process.env.NODE_ENV === 'production') {
   // Serve built client files
+  // Serves index.html by default from "/" route
   app.use(express.static('dist'))
 }
 else {

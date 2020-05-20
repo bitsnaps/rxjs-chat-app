@@ -1,6 +1,6 @@
-import { of, fromEvent } from 'rxjs'
-import { map, switchMap } from 'rxjs/operators'
-import io from 'socket.io-client'
+const { of, fromEvent } = require('rxjs')
+const { map, switchMap } = require('rxjs/operators')
+const io = require('socket.io-client')
 
 // Initialise Socket.IO and wrap in observable
 const socket$ = of(io())
